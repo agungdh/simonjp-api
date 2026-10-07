@@ -29,8 +29,6 @@ go build -o bin/api ./cmd/api
 
 Swagger UI: `http://localhost:8080/swagger/index.html`, spec: `/swagger/doc.json`.
 
-Adminer (SQLite GUI): `docker compose up -d adminer` → `http://127.0.0.1:8083`, login System `SQLite3`, Database `/data/app.db` (no username/password).
-
 ## Conventions for changes
 
 - New entity ≈ clone `items` flow: bun model in `internal/models/` → handler in `internal/handlers/` with swaggo annotations → mount in `internal/routes/routes.go` → new `migrations/NNNNN_*.sql` → `make swag`.
