@@ -1,4 +1,4 @@
-.PHONY: run tidy build migrate-up migrate-down
+.PHONY: run tidy build migrate-up migrate-down swag
 
 run:
 	go run ./cmd/api
@@ -14,3 +14,6 @@ migrate-up:
 
 migrate-down:
 	go run github.com/pressly/goose/v3/cmd/goose@latest -dir migrations sqlite3 data/app.db down
+
+swag:
+	swag init -g cmd/api/main.go -o docs --parseDependency --parseInternal

@@ -29,6 +29,13 @@ func writeError(w http.ResponseWriter, status int, msg string) {
 	writeJSON(w, status, map[string]string{"error": msg})
 }
 
+// List godoc
+// @Summary      List items
+// @Tags         items
+// @Produce      json
+// @Success      200  {array}   models.Item
+// @Failure      500  {object}  models.ErrorResponse
+// @Router       /api/items [get]
 func (h *ItemHandler) List(w http.ResponseWriter, r *http.Request) {
 	var items []models.Item
 	ctx := r.Context()
@@ -43,6 +50,15 @@ func (h *ItemHandler) List(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, items)
 }
 
+// Get godoc
+// @Summary      Get item by ID
+// @Tags         items
+// @Produce      json
+// @Param        id   path      int  true  "Item ID"
+// @Success      200  {object}  models.Item
+// @Failure      400  {object}  models.ErrorResponse
+// @Failure      404  {object}  models.ErrorResponse
+// @Router       /api/items/{id} [get]
 func (h *ItemHandler) Get(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	if err != nil {
@@ -63,11 +79,17 @@ func (h *ItemHandler) Get(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, item)
 }
 
-type itemInput struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-}
+type itemInput = models.ItemInput
 
+// Create godoc
+// @Summary      Create item
+// @Tags         items
+// @Accept       json
+// @Produce      json
+// @Param        body  body      models.ItemInput  true  "Item body"
+// @Success      201   {object}  models.Item
+// @Failure      400   {object}  models.ErrorResponse
+// @Router       /api/items [post]
 func (h *ItemHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var in itemInput
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
@@ -95,6 +117,17 @@ func (h *ItemHandler) Create(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusCreated, item)
 }
 
+// Update godoc
+// @Summary      Update item
+// @Tags         items
+// @Accept       json
+// @Produce      json
+// @Param        id    path      int               true  "Item ID"
+// @Param        body  body      models.ItemInput  true  "Item body"
+// @Success      200   {object}  models.Item
+// @Failure      400   {object}  models.ErrorResponse
+// @Failure      404   {object}  models.ErrorResponse
+// @Router       /api/items/{id} [put]
 func (h *ItemHandler) Update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	if err != nil {
@@ -134,6 +167,14 @@ func (h *ItemHandler) Update(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, item)
 }
 
+// Delete godoc
+// @Summary      Delete item
+// @Tags         items
+// @Produce      json
+// @Param        id   path      int  true  "Item ID"
+// @Success      200  {object}  map[string]bool
+// @Failure      400  {object}  models.ErrorResponse
+// @Router       /api/items/{id} [delete]
 func (h *ItemHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	if err != nil {

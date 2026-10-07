@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/swaggo/http-swagger"
 	"github.com/uptrace/bun"
 
 	"github.com/agungdh/simonjp-api/internal/handlers"
@@ -21,6 +22,8 @@ func New(db *bun.DB) *chi.Mux {
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"ok":true}`))
 	})
+
+	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	h := &handlers.ItemHandler{DB: db}
 

@@ -12,6 +12,14 @@ go run ./cmd/api
 
 Server: `http://localhost:8080`
 
+Swagger UI: `http://localhost:8080/swagger/index.html`
+
+Regenerate docs setelah ubah anotasi:
+
+```sh
+make swag
+```
+
 ## Endpoints
 
 - `GET /health`

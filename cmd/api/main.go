@@ -11,8 +11,16 @@ import (
 	"github.com/agungdh/simonjp-api/internal/config"
 	"github.com/agungdh/simonjp-api/internal/db"
 	"github.com/agungdh/simonjp-api/internal/routes"
+
+	_ "github.com/agungdh/simonjp-api/docs"
 )
 
+// @title           simonjp-api
+// @version         1.0
+// @description     Simple CRUD API: chi + sqlite + bun + goose.
+// @host            localhost:8080
+// @BasePath        /
+// @schemes         http
 func main() {
 	cfg := config.Load()
 
