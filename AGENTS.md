@@ -29,8 +29,6 @@ go build -o bin/api ./cmd/api
 
 Swagger UI: `http://localhost:8080/swagger/index.html`, spec: `/swagger/doc.json`.
 
-Adminer (SQLite GUI): `docker compose up -d adminer` → `http://127.0.0.1:8083`. NOTE: plain Adminer 6 rejects SQLite login entirely (empty password → "without a password", any password → "does not support passwords") — needs the login-password-less plugin or use Navicat instead.
-
 ## Conventions for changes
 
 - New entity ≈ clone `items` flow: bun model in `internal/models/` → handler in `internal/handlers/` with swaggo annotations → mount in `internal/routes/routes.go` → new `migrations/NNNNN_*.sql` → `make swag`.
