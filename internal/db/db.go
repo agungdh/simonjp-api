@@ -18,8 +18,9 @@ func New(dbPath string) (*bun.DB, error) {
 	}
 
 	// modernc.org/sqlite driver name is "sqlite".
-	// Enable FK + WAL for better defaults.
-	dsn := "file:" + dbPath + "?cache=shared&_pragma=foreign_keys(1)&_pragma=journal_mode(WAL)"
+	// Enable FK + WAL for better defaults. busy_timeout makes a
+	// concurrent writer wait (instead of failing with SQLITE_BUSY).
+	dsn := "file:" + dbPath + "?cache=shared&_pragma=foreign_keys(1)&_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)"
 
 	sqldb, err := sql.Open("sqlite", dsn)
 	if err != nil {
