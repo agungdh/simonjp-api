@@ -9,10 +9,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - goarch: amd64
+            goamd64: v2
+            output: bin/api-linux-amd64v2
+          - goarch: arm64
+            goamd64: ""
+            output: bin/api-linux-arm64
     env:
       GOOS: linux
-      GOARCH: amd64
-      GOAMD64: v2
       CGO_ENABLED: 0
     steps:
       - uses: actions/checkout@v4
@@ -25,11 +32,14 @@ jobs:
       - name: Vet
         run: go vet ./...
 
-      - name: Build
-        run: go build -o bin/api ./cmd/api
+      - name: Build (${{ matrix.goarch }})
+        env:
+          GOARCH: ${{ matrix.goarch }}
+          GOAMD64: ${{ matrix.goamd64 }}
+        run: go build -o ${{ matrix.output }} ./cmd/api
 
-      - name: Upload binary
+      - name: Upload binary (${{ matrix.goarch }})
         uses: actions/upload-artifact@v4
         with:
-          name: api-linux-amd64v2
-          path: bin/api
+          name: api-linux-${{ matrix.goarch }}
+          path: ${{ matrix.output }}
