@@ -1,0 +1,10 @@
+services:
+  adminer:
+    image: adminer:6
+    container_name: simonjp-adminer
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8083:8080"
+    volumes:
+      - ./data:/data
+      - ./docker/adminer/plugins-enabled:/var/www/html/plugins-enabled:ro
