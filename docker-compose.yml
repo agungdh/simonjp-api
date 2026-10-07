@@ -3,6 +3,8 @@ services:
     image: adminer:6
     container_name: simonjp-adminer
     restart: unless-stopped
+    # Run as the host user so SQLite files (owned by $UID) stay writable.
+    user: "${UID:-1000}:${GID:-1000}"
     ports:
       - "127.0.0.1:8083:8080"
     volumes:
