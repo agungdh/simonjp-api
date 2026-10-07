@@ -29,7 +29,7 @@ go build -o bin/api ./cmd/api
 
 Swagger UI: `http://localhost:8080/swagger/index.html`, spec: `/swagger/doc.json`.
 
-Adminer (SQLite GUI): `docker compose up -d adminer` → `http://127.0.0.1:8083`, System `SQLite3`, Database `/data/app.db`, password `admin` (verified by `docker/adminer/plugins-enabled/001-login-password-less.php`, SQLite itself has no users).
+Adminer (SQLite GUI): `docker compose up -d adminer` → `http://127.0.0.1:8083`. NOTE: plain Adminer 6 rejects SQLite login entirely (empty password → "without a password", any password → "does not support passwords") — needs the login-password-less plugin or use Navicat instead.
 
 ## Conventions for changes
 

@@ -9,4 +9,3 @@ services:
       - "127.0.0.1:8083:8080"
     volumes:
       - ./data:/data
-      - ./docker/adminer/plugins-enabled:/var/www/html/plugins-enabled:ro
